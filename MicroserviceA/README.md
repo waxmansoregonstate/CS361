@@ -2,14 +2,16 @@ cs361 - Microservice A
 
 A.
 This microservice can be easily called by passing it a JSON through zeroMQ in the following format:
+```
     {
         "type": "",             # imdb or spotify (unimplimented)
         "user_id": "",          # code corresponding to user
         "history": [],          # an array of strings of movie titles, not required
         "preferred_genres": []  # an array of strings of genres, not required
     }
-
+```
 The following are all examples of legal requests to the microservice:
+```
     {
         "type": "IMDb",
         "user_id": "0123456789",
@@ -40,7 +42,7 @@ The following are all examples of legal requests to the microservice:
         "history": [],
         "preferred_genres": []
     }
-
+```
 The process, in python, can be seen below:
     response_socket = context.socket(zmq.PULL)
     response_socket.bind("tcp://*:5556")
@@ -50,6 +52,7 @@ The process, in python, can be seen below:
 B.
 This microservice can easily send back data over zeroMQ in a json format.
 If the process is a success it will be as so:
+```
     {
         "user_id": user_id,
         "recommendations": [
@@ -62,7 +65,7 @@ If the process is a success it will be as so:
             }
         ]
     }
-
+```
 If there is any error, the microservice will return this:
     {
         "error": "Invalid Request"
@@ -70,6 +73,7 @@ If there is any error, the microservice will return this:
 
 Below is an example return from the microservice:
 Received response:
+```
     {
         "user_id": "0123456793",
         "recommendations": [
@@ -155,6 +159,7 @@ Received response:
             }
         ]
     }
+```
 The process, in python, can be seen below:
 request_socket.send_json(request)
 response = response_socket.recv_json()
