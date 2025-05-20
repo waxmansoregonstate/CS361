@@ -1,0 +1,44 @@
+cs361 - Microservice A
+
+A.
+This microservice can be easily called by passing it a JSON through zeroMQ in the following format:
+{
+    "type": "",             # imdb or spotify (unimplimented)
+    "user_id": "",          # code corresponding to user
+    "history": [],          # an array of strings of movie titles, not required
+    "preferred_genres": []  # an array of strings of genres, not required
+}
+
+The following are all examples of legal requests to the microservice:
+{
+    "type": "IMDb",
+    "user_id": "0123456789",
+    "history": ["Inception", "The Matrix", "Interstellar"],
+    "preferred_genres": ["Sci-Fi", "Drama"]
+},
+{
+    "type": "IMDb",
+    "user_id": "0123456790",
+    "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
+    "preferred_genres": ["Action", "Adventure"]
+},
+{
+    "type": "IMDb",
+    "user_id": "0123456791",
+    "history": [],
+    "preferred_genres": ["Drama", "Thriller"]
+},
+{
+    "type": "IMDb",
+    "user_id": "0123456792",
+    "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
+    "preferred_genres": []
+},
+{
+    "type": "IMDb",
+    "user_id": "0123456793",
+    "history": [],
+    "preferred_genres": []
+}
+
+
