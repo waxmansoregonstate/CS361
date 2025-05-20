@@ -160,4 +160,4 @@ request_socket.send_json(request)
 response = response_socket.recv_json()
 
 C.
-[UML Diagram](/UML.png)
+![UML Sequence Diagram](UML.png)
