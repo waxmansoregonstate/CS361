@@ -2,43 +2,162 @@ cs361 - Microservice A
 
 A.
 This microservice can be easily called by passing it a JSON through zeroMQ in the following format:
-{
-    "type": "",             # imdb or spotify (unimplimented)
-    "user_id": "",          # code corresponding to user
-    "history": [],          # an array of strings of movie titles, not required
-    "preferred_genres": []  # an array of strings of genres, not required
-}
+    {
+        "type": "",             # imdb or spotify (unimplimented)
+        "user_id": "",          # code corresponding to user
+        "history": [],          # an array of strings of movie titles, not required
+        "preferred_genres": []  # an array of strings of genres, not required
+    }
 
 The following are all examples of legal requests to the microservice:
-{
-    "type": "IMDb",
-    "user_id": "0123456789",
-    "history": ["Inception", "The Matrix", "Interstellar"],
-    "preferred_genres": ["Sci-Fi", "Drama"]
-},
-{
-    "type": "IMDb",
-    "user_id": "0123456790",
-    "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
-    "preferred_genres": ["Action", "Adventure"]
-},
-{
-    "type": "IMDb",
-    "user_id": "0123456791",
-    "history": [],
-    "preferred_genres": ["Drama", "Thriller"]
-},
-{
-    "type": "IMDb",
-    "user_id": "0123456792",
-    "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
-    "preferred_genres": []
-},
-{
-    "type": "IMDb",
-    "user_id": "0123456793",
-    "history": [],
-    "preferred_genres": []
-}
+    {
+        "type": "IMDb",
+        "user_id": "0123456789",
+        "history": ["Inception", "The Matrix", "Interstellar"],
+        "preferred_genres": ["Sci-Fi", "Drama"]
+    }
+    {
+        "type": "IMDb",
+        "user_id": "0123456790",
+        "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
+        "preferred_genres": ["Action", "Adventure"]
+    }
+    {
+        "type": "IMDb",
+        "user_id": "0123456791",
+        "history": [],
+        "preferred_genres": ["Drama", "Thriller"]
+    }
+    {
+        "type": "IMDb",
+        "user_id": "0123456792",
+        "history": ["Mad Max: Fury Road", "John Wick", "The Dark Knight"],
+        "preferred_genres": []
+    }
+    {
+        "type": "IMDb",
+        "user_id": "0123456793",
+        "history": [],
+        "preferred_genres": []
+    }
+
+The process, in python, can be seen below:
+    response_socket = context.socket(zmq.PULL)
+    response_socket.bind("tcp://*:5556")
+    request = {} # any json as seen above
 
 
+B.
+This microservice can easily send back data over zeroMQ in a json format.
+If the process is a success it will be as so:
+    {
+        "user_id": user_id,
+        "recommendations": [
+            {
+                "title": <String>,
+                "score": <float>,
+                "votes": <int>,
+                "popularity_score": <float>, # calculated as a factor of both the score and the votes
+                "genres": <Array of Strings>
+            }
+        ]
+    }
+
+If there is any error, the microservice will return this:
+    {
+        "error": "Invalid Request"
+    }
+
+Below is an example return from the microservice:
+Received response:
+    {
+        "user_id": "0123456793",
+        "recommendations": [
+            {
+                "title": "The Shawshank Redemption",
+                "score": 9.3,
+                "votes": 3044623,
+                "popularity_score": 28314993.900000002,      
+                "year": 1994.0,
+                "genres": "Drama"
+            },
+            {
+                "title": "The Dark Knight",
+                "score": 9.0,
+                "votes": 3021535,
+                "popularity_score": 27193815.0,
+                "year": 2008.0,
+                "genres": "Action,Crime,Drama"
+            },
+            {
+                "title": "Inception",
+                "score": 8.8,
+                "votes": 2684097,
+                "popularity_score": 23620053.6,
+                "year": 2010.0,
+                "genres": "Action,Adventure,Sci-Fi"
+            },
+            {
+                "title": "Fight Club",
+                "score": 8.8,
+                "votes": 2465549,
+                "popularity_score": 21696831.200000003,      
+                "year": 1999.0,
+                "genres": "Crime,Drama,Thriller"
+            },
+            {
+                "title": "Forrest Gump",
+                "score": 8.8,
+                "votes": 2379838,
+                "popularity_score": 20942574.400000002,      
+                "year": 1994.0,
+                "genres": "Drama,Romance"
+            },
+            {
+                "title": "Pulp Fiction",
+                "score": 8.9,
+                "votes": 2335227,
+                "popularity_score": 20783520.3,
+                "year": 1994.0,
+                "genres": "Crime,Drama"
+            },
+            {
+                "title": "Interstellar",
+                "score": 8.7,
+                "votes": 2346084,
+                "popularity_score": 20410930.799999997,      
+                "year": 2014.0,
+                "genres": "Adventure,Drama,Sci-Fi"
+            },
+            {
+                "title": "The Godfather",
+                "score": 9.2,
+                "votes": 2125345,
+                "popularity_score": 19553174.0,
+                "year": 1972.0,
+                "genres": "Crime,Drama"
+            },
+            {
+                "title": "The Lord of the Rings: The Fellowship of the Ring",
+                "score": 8.9,
+                "votes": 2108228,
+                "popularity_score": 18763229.2,
+                "year": 2001.0,
+                "genres": "Adventure,Drama,Fantasy"
+            },
+            {
+                "title": "The Matrix",
+                "score": 8.7,
+                "votes": 2156320,
+                "popularity_score": 18759984.0,
+                "year": 1999.0,
+                "genres": "Action,Sci-Fi"
+            }
+        ]
+    }
+The process, in python, can be seen below:
+request_socket.send_json(request)
+response = response_socket.recv_json()
+
+C.
+![alt text](UML-1.png)
