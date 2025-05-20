@@ -168,4 +168,5 @@ The process, in python, can be seen below:
 response = response_socket.recv_json()
 ```
 C.
+UML
 ![UML Sequence Diagram](UML.png)
