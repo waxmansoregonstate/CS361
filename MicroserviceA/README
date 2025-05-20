@@ -160,4 +160,4 @@ request_socket.send_json(request)
 response = response_socket.recv_json()
 
 C.
-![alt text](https://github.com/waxmansoregonstate/CS361/blob/main/MicroserviceA/UML.png?raw=true "UML Diagram")
+![alt text](https://github.com/waxmansoregonstate/CS361/blob/main/MicroserviceA/UML.png "UML Diagram")
