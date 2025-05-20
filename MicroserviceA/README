@@ -159,4 +159,5 @@ The process, in python, can be seen below:
 request_socket.send_json(request)
 response = response_socket.recv_json()
 
-C. ![alt text](https://raw.githubusercontent.com/waxmansoregonstate/CS361/refs/heads/main/MicroserviceA/UML.png)
+C.
+[UML Diagram](https://raw.githubusercontent.com/waxmansoregonstate/CS361/refs/heads/main/MicroserviceA/UML.png)
