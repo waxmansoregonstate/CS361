@@ -44,10 +44,11 @@ The following are all examples of legal requests to the microservice:
     }
 ```
 The process, in python, can be seen below:
+```
     response_socket = context.socket(zmq.PULL)
     response_socket.bind("tcp://*:5556")
     request = {} # any json as seen above
-
+```
 
 B.
 This microservice can easily send back data over zeroMQ in a json format.
@@ -67,10 +68,11 @@ If the process is a success it will be as so:
     }
 ```
 If there is any error, the microservice will return this:
+```
     {
         "error": "Invalid Request"
     }
-
+```
 Below is an example return from the microservice:
 Received response:
 ```
@@ -161,8 +163,9 @@ Received response:
     }
 ```
 The process, in python, can be seen below:
-request_socket.send_json(request)
-response = response_socket.recv_json()
 
+```
+response = response_socket.recv_json()
+```
 C.
 ![UML Sequence Diagram](UML.png)
